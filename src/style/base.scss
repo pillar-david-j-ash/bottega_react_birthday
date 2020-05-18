@@ -8,7 +8,7 @@ $color-yellow-one: #F7D754;
     width: 100vw;
 
     display: grid;
-    grid-template-rows: repeat(4, minmax(200, 1fr));
+    grid-template-rows: repeat(4, minmax(200px, 1fr));
     grid-template-columns: repeat(11, minmax(150px, 1fr));
 
     &_title {
