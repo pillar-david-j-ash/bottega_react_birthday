@@ -14,6 +14,30 @@ export default class App extends Component {
     }
   }
 
+  handleGenerate = function() {
+    this.setState({ active: true })
+    var countDownDate = new Date("Sep 5, 2018 15:37:25").getTime();
+    var x = setInterval(function() {
+
+      var now = new Date().getTime();
+
+      var distance = countDownDate - now;
+
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Output the result in an element with id="demo"
+      const time = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+      console.log(time)
+
+      if (distance < 0) {
+          clearInterval(x);
+      }
+    }, 1000);
+  }.bind(this);
+
   renderItems = function() {
     if ( this.state.active ) {
       return [
@@ -25,7 +49,7 @@ export default class App extends Component {
     } else {
       return [
         <Picker/>,
-        Button('Generate Countdown', () => {this.setState({active: true})})
+        Button('Generate Countdown', () => {this.handleGenerate()})
       ]
     }
   }.bind(this)
