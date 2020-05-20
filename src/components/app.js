@@ -65,7 +65,7 @@ export default class App extends Component {
     var countDownDate = bday.getTime();
     this.timer = setInterval(function() {
 
-      var now = today.getTime();
+      var now = new Date().getTime();
 
       var distance = countDownDate - now;
 
