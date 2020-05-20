@@ -9,10 +9,19 @@ export default class App extends Component {
   constructor(props) {
     super(props);
 
+    var timer = 0
+
     this.state = {
       active: false,
-      startDate: new Date()
+      startDate: new Date(),
+      timeRemaining: {
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+      }
     }
+    this.handleGenerate = this.handleGenerate.bind(this)
   }
 
   handleChange = function(date) {
@@ -24,7 +33,7 @@ export default class App extends Component {
   handleGenerate = function() {
     this.setState({ active: true })
     var countDownDate = this.state.startDate.getTime();
-    var x = setInterval(function() {
+    timer = setInterval(function() {
 
       var now = new Date().getTime();
 
@@ -37,10 +46,17 @@ export default class App extends Component {
 
       // Output the result in an element with id="demo"
       const time = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-      console.log(time)
+      const timeRemaining = {
+        days,
+        hours,
+        minutes,
+        seconds,
+      }
+      this.setState({timeRemaining})
+      console.log(this.state.timeRemaining)
 
       if (distance < 0) {
-          clearInterval(x);
+          clearInterval(timer);
       }
     }, 1000);
   }.bind(this);
@@ -55,7 +71,7 @@ export default class App extends Component {
       ]
     } else {
       return [
-        <Picker callback={ date => this.handleChange(date)}/>,
+        <Picker callback={ date => this.handleChange(date)} startDate={this.state.startDate}/>,
         Button('Generate Countdown', () => {this.handleGenerate()})
       ]
     }
