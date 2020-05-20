@@ -20,7 +20,7 @@ export default class App extends Component {
         minutes: 0,
         seconds: 0
       },
-      age: 0
+      age: 0,
     }
     this.handleGenerate = this.handleGenerate.bind(this)
   }
@@ -88,17 +88,29 @@ export default class App extends Component {
     }.bind(this), 1000);
   }.bind(this);
 
+  getBirthDate = function(date) {
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    if (month < 10){
+      month = "0"+month
+    }
+    if (day < 10) {
+      day = "0"+day;
+    }
+    return `${month}/${day}`
+  }.bind(this)
+
   renderItems = function() {
     if ( this.state.active ) {
       return [
-        <Clock timeRemaining={this.state.timeRemaining}/>,
+        <Clock key={0} timeRemaining={this.state.timeRemaining}/>,
         ChangeDate('Change Date', () => {this.setState({active: false})}),
-        LargeText("04/03"),
-        <label className="grid_remaining">Remaining until your {this.state.age}</label>
+        LargeText(this.getBirthDate(this.state.startDate)),
+        <label key={3} className="grid_remaining">Remaining until your {this.state.age}</label>
       ]
     } else {
       return [
-        <Picker callback={ date => this.handleChange(date)} startDate={this.state.startDate}/>,
+        <Picker key ={0} callback={ date => this.handleChange(date)} startDate={this.state.startDate}/>,
         Button('Generate Countdown', () => {this.handleGenerate()})
       ]
     }
