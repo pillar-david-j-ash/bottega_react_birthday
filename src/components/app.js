@@ -6,11 +6,11 @@ import ChangeDate from "./changeDate";
 import LargeText from "./largeText";
 
 export default class App extends Component {
+
   constructor(props) {
     super(props);
 
-    var timer = 0
-
+    this.timer = 0;
     this.state = {
       active: false,
       startDate: new Date(),
@@ -33,7 +33,7 @@ export default class App extends Component {
   handleGenerate = function() {
     this.setState({ active: true })
     var countDownDate = this.state.startDate.getTime();
-    timer = setInterval(function() {
+    this.timer = setInterval(function() {
 
       var now = new Date().getTime();
 
@@ -44,8 +44,6 @@ export default class App extends Component {
       var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      // Output the result in an element with id="demo"
-      const time = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
       const timeRemaining = {
         days,
         hours,
@@ -53,18 +51,17 @@ export default class App extends Component {
         seconds,
       }
       this.setState({timeRemaining})
-      console.log(this.state.timeRemaining)
 
       if (distance < 0) {
-          clearInterval(timer);
+          clearInterval(this.timer);
       }
-    }, 1000);
+    }.bind(this), 1000);
   }.bind(this);
 
   renderItems = function() {
     if ( this.state.active ) {
       return [
-        <Clock/>,
+        <Clock timeRemaining={this.state.timeRemaining}/>,
         ChangeDate('Change Date', () => {this.setState({active: false})}),
         LargeText("04/03"),
         <label className="grid_remaining">Remaining until your 21st birthday</label>
