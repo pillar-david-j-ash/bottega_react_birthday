@@ -2,7 +2,6 @@ import React, { Component } from "react"
 
 class Clock extends Component {
     render(){
-        console.log(this.props)
         return (
             <div className="clock">
                 <div className="clock_days clock_box">
