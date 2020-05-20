@@ -25,6 +25,7 @@ export default class App extends Component {
   }
 
   handleChange = function(date) {
+    clearInterval(this.timer)
     this.setState({
         startDate: date
     })
